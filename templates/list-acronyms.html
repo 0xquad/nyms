@@ -1,0 +1,67 @@
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content=""/>
+  <meta name="author" content="Alexandre Hamelin"/>
+  <meta name="copyright" content="Copyright (c) 2015, The Web Site Authors"/>
+  <title>Acronyms</title>
+  <link rel="stylesheet" href="${static('css/foundation.min.css')}"/>
+  <script src="${static('js/vendor/modernizr.js')}"></script>
+</head>
+
+<body>
+
+  <table id="acronym-table" style="width: 100%">
+    <thead>
+      <tr>
+        <th>Acronym</th><th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr py:if="acronyms" py:for="a in acronyms">
+        <td>${a.name}</td><td>${a.description}</td>
+      </tr>
+      <tr id="input-row">
+        <td><input type="text" name="name"/></td>
+        <td><input type="text" name="descr" style="width:30em"/>
+          <button id="add-button" class="confirm" style="float: right">Add</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script src="${static('js/vendor/jquery.js')}"></script>
+  <script src="${static('js/foundation.min.js')}"></script>
+  <script>
+    $(document).foundation();
+
+    var doc = document.documentElement;
+    doc.setAttribute('data-useragent', navigator.userAgent);
+  </script>
+  <script>
+    function escapeHTML(t) {
+      return $('<div/>').text(t).html();
+    }
+    $('#add-button').click(function() {
+      name_el = $('#input-row input[name="name"]')[0];
+      descr_el = $('#input-row input[name="descr"]')[0];
+      name = name_el.value.trim();
+      descr = descr_el.value.trim();
+      $.post("${url_for('submit_acronym')}", {name: name, descr: descr}, function(resp) {
+        if (resp.result == 'OK') {
+          $('#acronym-table > tbody:last-child').before('<tr><td>' + escapeHTML(name) + '</td><td>' + escapeHTML(descr) + '</td></tr>');
+          name_el.value = descr_el.value = '';
+        }
+        else
+          alert('error submitting acronym: ' + resp.error); //$('#error-popup').show();
+      }, 'json');
+    });
+  </script>
+</body>
+
+</html>
+<!--! vim:set ts=2 sw=2 et: -->
