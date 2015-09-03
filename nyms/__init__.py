@@ -1,4 +1,7 @@
-#!/usr/bin/env python
+# Nyms - A simple acronym manager
+#
+# Copyright (c) 2015, Alexandre Hamelin <alexandre.hamelin gmail.com>
+
 
 
 from flask import Flask, url_for, request, jsonify
