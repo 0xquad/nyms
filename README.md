@@ -9,3 +9,10 @@ cd directory
 . bin/activate
 python app.py -d
 ```
+
+Or,
+
+```
+docker build -t nyms-app .
+docker run -dti -p 5000:5000 nyms-app
+```
