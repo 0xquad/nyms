@@ -4,7 +4,7 @@
 
 
 
-from flask import Flask, url_for, request, jsonify
+from flask import Flask, url_for
 from flaskext.genshi import Genshi, render_template
 
 
@@ -21,40 +21,6 @@ def render(template, **kwargs):
 
 
 
-class Acronym:
-    def __init__(self, acronym, description):
-        self.acronym = acronym
-        self.description = description
-
-
-all_acronyms = {
-
-}
-
-
-def get_acronyms():
-    return map(Acronym, all_acronyms)
-
-
-@app.route('/')
-def home():
-    return render('list-acronyms.html', acronyms=get_acronyms())
-
-
-@app.route('/new', methods=['POST'])
-def submit_acronym():
-    name = request.form['name'].strip()
-    descr = request.form['descr'].strip()
-
-    if name == '':
-        return jsonify(result='FAILED', error='Empty acronym')
-    if descr == '':
-        return jsonify(result='FAILED', error='Empty acronym description')
-    if name in all_acronyms:
-        return jsonify(result='FAILED', error='Acronym already exists')
-
-    acronym = Acronym(name, descr)
-    all_acronyms[name] = acronym
-    return jsonify(result='OK')
-
-
+# Import anything that depended on `app`
+from nyms.views import *
+from nyms.models import *
