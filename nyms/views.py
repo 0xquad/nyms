@@ -3,9 +3,22 @@
 # Copyright (c) 2015, Alexandre Hamelin <alexandre.hamelin gmail.com>
 
 
-from flask import request, jsonify
-from nyms import app, render
+from flask import request, jsonify, url_for
+from flaskext.genshi import Genshi, render_template
+from nyms import app
 from nyms.models import Acronym, db
+
+
+genshi = Genshi(app)
+genshi.extensions['html'] = 'html5'
+
+
+def render(template, **kwargs):
+    kwargs.update({
+        'static' : lambda res: url_for('static', filename=res)
+    })
+    return render_template(template, kwargs)
+
 
 
 @app.route('/')
