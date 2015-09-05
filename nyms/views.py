@@ -1,4 +1,4 @@
-# Nyms - Views
+# Nyms - Application views
 #
 # Copyright (c) 2015, Alexandre Hamelin <alexandre.hamelin gmail.com>
 

@@ -1,3 +1,8 @@
+# Nyms - Application models
+#
+# Copyright (c) 2015, Alexandre Hamelin <alexandre.hamelin gmail.com>
+
+
 import os, os.path
 from datetime import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
