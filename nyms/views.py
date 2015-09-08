@@ -23,7 +23,7 @@ def render(template, **kwargs):
 
 @app.route('/')
 def home():
-    return render('list-acronyms.html', acronyms=Acronym.query.all())
+    return render('list-acronyms.html', acronyms=Acronym.query.order_by(Acronym.name).all())
 
 
 @app.route('/new', methods=['POST'])
