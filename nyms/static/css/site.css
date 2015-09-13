@@ -21,6 +21,11 @@
     opacity: 0.8;
     color: white; }
 
+:link[href="#input-row"] {
+  float: right;
+  padding: .750rem 1rem;
+}
+
 .footer {
   background-color: #292c2f;
   text-align: center;
