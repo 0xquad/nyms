@@ -27,7 +27,7 @@
     </thead>
     <tbody>
       <tr py:if="acronyms" py:for="a in acronyms">
-        <td>${a.name}</td><td>${a.description} <a href="#" data-reveal-id="delete-modal">[X]</a></td>
+        <td>${a.name}</td><td>${a.description} <a href="#" data-acronym-id="${a.name}" onclick="confirm_delete(this)">[X]</a></td>
       </tr>
       <tr id="input-row">
         <td>
@@ -48,9 +48,10 @@
   </table>
 
   <div id="delete-modal" class="reveal-modal" data-reveal="" aria-labelledby="" aria-hidden="true" role="dialog">
-    <h2>Modal title</h2>
-    <p>text here</p>
-    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    <h2>Remove acronym?</h2>
+    <p>Are you sure you want to permanently delete this acronym?</p>
+    <button class="radius button" onclick="$(this).foundation('reveal', 'close')">Delete</button>
+    <button class="radius button secondary" onclick="$(this).foundation('reveal', 'close')">Cancel</button>
   </div>
 
   <div data-alert="" class="alert-box alert round" id="error-alert">
@@ -80,6 +81,25 @@
     doc.setAttribute('data-useragent', navigator.userAgent);
   </script>
   <script>
+    function confirm_delete(link) {
+      acr = $(link).data('acronym-id');
+      if (window.confirm('Do you want to remove acronym ' + acr + '?')) {
+        $.post("${url_for('delete_acronym')}", {name: acr}, function(resp) {
+          if (resp.result == 'OK') {
+            $(link).parent().parent().remove();
+          }
+          else {
+            $('#error-text').text(resp.error);
+            $('#error-alert').fadeIn('fast', function() {
+              setTimeout(function() {
+                $('#error-alert').fadeOut('slow');
+              }, 3000);
+            });
+          }
+        });
+      }
+    }
+
     function escapeHTML(t) {
       return $('<div/>').text(t).html();
     }
