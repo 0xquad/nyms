@@ -44,3 +44,12 @@ def submit_acronym():
     return jsonify(result='OK')
 
 
+@app.route('/delete', methods=['POST'])
+def delete_acronym():
+    name = request.form['name'].strip()
+    if name == '':
+        return jsonify(result='FAILED', error='Empty acronym')
+    acronym = Acronym.query.filter_by(name=name).first()
+    db.session.delete(acronym)
+    db.session.commit()
+    return jsonify(result='OK')
