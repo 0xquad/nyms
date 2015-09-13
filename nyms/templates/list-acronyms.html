@@ -27,7 +27,7 @@
     </thead>
     <tbody>
       <tr py:if="acronyms" py:for="a in acronyms">
-        <td>${a.name}</td><td>${a.description}</td>
+        <td>${a.name}</td><td>${a.description} <a href="#" data-reveal-id="delete-modal">[X]</a></td>
       </tr>
       <tr id="input-row">
         <td>
@@ -47,6 +47,16 @@
     </tbody>
   </table>
 
+  <div id="delete-modal" class="reveal-modal" data-reveal="" aria-labelledby="" aria-hidden="true" role="dialog">
+    <h2>Modal title</h2>
+    <p>text here</p>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  </div>
+
+  <div data-alert="" class="alert-box alert round" id="error-alert">
+    <span id="error-text"></span>
+    <a href="#" class="close">&times;</a>
+  </div>
 
   <footer class="footer">
     <div class="row">
@@ -80,11 +90,17 @@
       descr = descr_el.value.trim();
       $.post("${url_for('submit_acronym')}", {name: name, descr: descr}, function(resp) {
         if (resp.result == 'OK') {
-          $('#acronym-table > tbody:last-child').before('<tr><td>' + escapeHTML(name) + '</td><td>' + escapeHTML(descr) + '</td></tr>');
+          $('#acronym-table > tbody:last-child').before('<tr><td>' + escapeHTML(name) + '</td><td>' + escapeHTML(descr) + ' <a href="#" data-reveal-id="delete-modal">[X]</a></td></tr>');
           name_el.value = descr_el.value = '';
         }
-        else
-          alert('error submitting acronym: ' + resp.error); //$('#error-popup').show();
+        else {
+          $('#error-text').text(resp.error);
+          $('#error-alert').fadeIn('fast', function() {
+            setTimeout(function() {
+              $('#error-alert').fadeOut('slow');
+            }, 3000);
+          });
+        }
       }, 'json');
     });
   </script>

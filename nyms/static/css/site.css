@@ -9,6 +9,18 @@
 #acronym-table input {
   margin: 0;
 }
+#acronym-table a {
+  letter-spacing: 0.375rem;
+  font-weight: bold;
+  float: right;
+}
+
+.alert-box {
+  display: none; }
+  .alert-box .close {
+    opacity: 0.8;
+    color: white; }
+
 .footer {
   background-color: #292c2f;
   text-align: center;
