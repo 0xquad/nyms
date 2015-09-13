@@ -51,6 +51,6 @@
 .header {
   padding: 0.5rem;
   background: #292c2f; }
-  .header h1 {
+  .header h1, .header h1 :link {
     text-align: center;
     color: white; }
