@@ -11,12 +11,15 @@
   <meta name="copyright" content="Copyright (c) 2015, The Web Site Authors"/>
   <title>Acronyms</title>
   <link rel="stylesheet" href="${static('css/foundation.min.css')}"/>
+  <link rel="stylesheet" href="${static('css/site.css')}"/>
   <script src="${static('js/vendor/modernizr.js')}"></script>
 </head>
 
 <body>
-
-  <table id="acronym-table" style="width: 100%">
+  <header class="header">
+    <h1>Acronyms</h1>
+  </header>
+  <table id="acronym-table">
     <thead>
       <tr>
         <th>Acronym</th><th>Description</th>
@@ -27,12 +30,36 @@
         <td>${a.name}</td><td>${a.description}</td>
       </tr>
       <tr id="input-row">
-        <td><input type="text" name="name"/></td>
-        <td><input type="text" name="descr" style="width:30em"/>
-          <button id="add-button" class="confirm" style="float: right">Add</button></td>
+        <td>
+          <input type="text" name="name"/>
+        </td>
+        <td>
+          <div class="row">
+            <div class="small-8 columns">
+              <input type="text" name="descr"/>
+            </div>
+            <div class="small-4 columns">
+              <button id="add-button" class="confirm">Add</button>
+            </div>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>
+
+
+  <footer class="footer">
+    <div class="row">
+      <div class="small-12 columns">
+        <p class="links">
+          <a href="#">Acronyms</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </p>
+        <p class="copyright">Copyright &copy; 2015, Alexandre Hamelin &lt;alexandre.hamelin gmail.com&gt;</p>
+      </div>
+    </div>
+  </footer>
 
   <script src="${static('js/vendor/jquery.js')}"></script>
   <script src="${static('js/foundation.min.js')}"></script>
@@ -61,6 +88,7 @@
       }, 'json');
     });
   </script>
+
 </body>
 
 </html>
