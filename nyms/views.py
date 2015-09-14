@@ -53,3 +53,13 @@ def delete_acronym():
     db.session.delete(acronym)
     db.session.commit()
     return jsonify(result='OK')
+
+
+@app.route('/about')
+def about():
+    return render('about.html')
+
+
+@app.route('/contact')
+def contact():
+    return render('contact.html')
