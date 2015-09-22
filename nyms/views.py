@@ -15,10 +15,14 @@ genshi.extensions['html'] = 'html5'
 
 def render(template, **kwargs):
     kwargs.update({
-        'static' : lambda res: url_for('static', filename=res)
+        'static' : lambda res: url_for('static', filename=res),
+        'jsescape' : jsescape,
     })
     return render_template(template, kwargs)
 
+
+def jsescape(string):
+    return string.replace('\\', '\\\\').replace('"', '\\"').replace("'", "\\'")
 
 
 @app.route('/')

@@ -32,7 +32,7 @@
         <td>
           <span>${a.description}</span>
           <div class="right">
-            <a href="#" data-acronym-id="${a.name}" onclick="update(this)">[E]</a>
+            <a href="#" data-acronym-id="${a.name}" onclick="update(this, '${jsescape(a.description)}')">[E]</a>
             <a href="#" data-acronym-id="${a.name}" onclick="confirm_delete(this)">[X]</a>
           </div>
         </td>
@@ -88,9 +88,9 @@
     doc.setAttribute('data-useragent', navigator.userAgent);
   </script>
   <script>
-    function update(link) {
+    function update(link, old_descr) {
       acr = $(link).data('acronym-id');
-      descr = window.prompt('Enter a new definition below');
+      descr = window.prompt('Enter a new definition below', old_descr);
       if (!descr) return;
       $.post("${url_for('update_acronym')}", {name: acr, descr: descr}, function(resp) {
         if (resp.result == 'OK') {
