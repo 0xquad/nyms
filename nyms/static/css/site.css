@@ -12,7 +12,7 @@
 #acronym-table a {
   letter-spacing: 0.375rem;
   font-weight: bold;
-  float: right;
+  /*float: right;*/
 }
 
 .alert-box {

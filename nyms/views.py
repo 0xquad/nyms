@@ -44,6 +44,27 @@ def submit_acronym():
     return jsonify(result='OK')
 
 
+@app.route('/update', methods=['POST'])
+def update_acronym():
+    name = request.form['name'].strip()
+    descr = request.form['descr'].strip()
+
+    if name == '':
+        return jsonify(result='FAILED', error='Empty acronym')
+    if descr == '':
+        return jsonify(result='FAILED', error='Empty acronym description')
+
+    acronym = Acronym.query.filter_by(name=name).first()
+
+    if acronym:
+        acronym.description = descr
+        db.session.add(acronym)
+        db.session.commit()
+        return jsonify(result='OK')
+    else:
+        return jsonify(result='FAILED', error='Acronym does not exist')
+
+
 @app.route('/delete', methods=['POST'])
 def delete_acronym():
     name = request.form['name'].strip()

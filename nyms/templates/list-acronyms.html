@@ -28,7 +28,14 @@
     </thead>
     <tbody>
       <tr py:if="acronyms" py:for="a in acronyms">
-        <td>${a.name}</td><td>${a.description} <a href="#" data-acronym-id="${a.name}" onclick="confirm_delete(this)">[X]</a></td>
+        <td>${a.name}</td>
+        <td>
+          <span>${a.description}</span>
+          <div class="right">
+            <a href="#" data-acronym-id="${a.name}" onclick="update(this)">[E]</a>
+            <a href="#" data-acronym-id="${a.name}" onclick="confirm_delete(this)">[X]</a>
+          </div>
+        </td>
       </tr>
       <tr id="input-row">
         <td>
@@ -81,6 +88,24 @@
     doc.setAttribute('data-useragent', navigator.userAgent);
   </script>
   <script>
+    function update(link) {
+      acr = $(link).data('acronym-id');
+      descr = window.prompt('Enter a new definition below');
+      $.post("${url_for('update_acronym')}", {name: acr, descr: descr}, function(resp) {
+        if (resp.result == 'OK') {
+          $(link).parent().siblings('span').text(descr);
+        }
+        else {
+          $('#error-text').text(resp.error);
+          $('#error-alert').fadeIn('fast', function() {
+            setTimeout(function() {
+              $('#error-alert').fadeOut('slow');
+            }, 3000);
+          });
+        }
+      });
+    }
+
     function confirm_delete(link) {
       acr = $(link).data('acronym-id');
       if (window.confirm('Do you want to remove acronym ' + acr + '?')) {
