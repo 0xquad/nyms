@@ -32,7 +32,7 @@
         <td>
           <span>${a.description}</span>
           <div class="right">
-            <a href="#" data-acronym-id="${a.name}" onclick="update(this, '${jsescape(a.description)}')">[E]</a>
+            <a href="#" data-acronym-id="${a.name}" onclick="update(this)">[E]</a>
             <a href="#" data-acronym-id="${a.name}" onclick="confirm_delete(this)">[X]</a>
           </div>
         </td>
@@ -88,9 +88,9 @@
     doc.setAttribute('data-useragent', navigator.userAgent);
   </script>
   <script>
-    function update(link, old_descr) {
+    function update(link) {
       acr = $(link).data('acronym-id');
-      descr = window.prompt('Enter a new definition below', old_descr);
+      descr = window.prompt('Enter a new definition below');
       if (!descr) return;
       $.post("${url_for('update_acronym')}", {name: acr, descr: descr}, function(resp) {
         if (resp.result == 'OK') {
@@ -112,7 +112,7 @@
       if (window.confirm('Do you want to remove acronym ' + acr + '?')) {
         $.post("${url_for('delete_acronym')}", {name: acr}, function(resp) {
           if (resp.result == 'OK') {
-            $(link).parent().parent().remove();
+            $(link).parent().parent().parent().remove();
           }
           else {
             $('#error-text').text(resp.error);
@@ -136,7 +136,14 @@
       descr = descr_el.value.trim();
       $.post("${url_for('submit_acronym')}", {name: name, descr: descr}, function(resp) {
         if (resp.result == 'OK') {
-          $('#acronym-table > tbody:last-child').before('<tr><td>' + escapeHTML(name) + '</td><td>' + escapeHTML(descr) + ' <a href="#" data-reveal-id="delete-modal">[X]</a></td></tr>');
+          $('#acronym-table > tbody:last-child').before(
+            '<tr><td>' + escapeHTML(name) + '</td>' +
+            '<td><span>' + escapeHTML(descr) + '</span>' +
+            '  <div class="right">' +
+            '    <a href="#" data-acronym-id="' + name + '" onclick="update(this)">[E]</a>' +
+            '    <a href="#" data-acronym-id="' + name + '" onclick="confirm_delete(this)">[X]</a>' +
+            '  </div>' +
+            '</td></tr>');
           name_el.value = descr_el.value = '';
         }
         else {
