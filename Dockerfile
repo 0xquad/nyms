@@ -11,7 +11,6 @@ COPY . /home/app
 RUN chown -R app:$(id -gn app) /home/app
 WORKDIR /home/app
 USER app
-RUN rm -fr .git bin lib* include
 RUN ./init.sh
 EXPOSE 5000
 VOLUME /home/app/data
