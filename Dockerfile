@@ -14,4 +14,4 @@ USER app
 RUN ./init.sh
 EXPOSE 5000
 VOLUME /home/app/data
-CMD . bin/activate && python run.py -dl ::
+CMD . bin/activate && exec python run.py -dl ::
