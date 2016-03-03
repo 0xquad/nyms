@@ -10,7 +10,7 @@ from nyms import app
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(
-    os.path.join(app.root_path, 'acronyms.db'))
+    os.path.join(os.path.dirname(app.root_path), 'acronyms.db'))
 
 db = SQLAlchemy(app)
 
