@@ -14,4 +14,5 @@ USER app
 RUN rm -fr .git bin lib* include
 RUN ./init.sh
 EXPOSE 5000
+VOLUME /home/app/data
 CMD . bin/activate && python run.py -dl ::

@@ -9,8 +9,9 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from nyms import app
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(
-    os.path.join(os.path.dirname(app.root_path), 'acronyms.db'))
+db_file = os.path.join(os.path.dirname(app.root_path), 'data', 'acronyms.db')
+os.makedirs(os.path.dirname(db_file), exist_ok=True)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(db_file)
 
 db = SQLAlchemy(app)
 
