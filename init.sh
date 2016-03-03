@@ -27,3 +27,4 @@ virtualenv -p python3 .
 pip install -r requirements.txt
 # Fix for Python 3
 sed -i 's/\.iteritems/.items/g' lib/*/site-packages/flaskext/genshi.py
+python -c 'from nyms.models import db; db.create_all()'
