@@ -21,6 +21,7 @@ set -e
     exit 1
 }
 
+mkdir -p data
 virtualenv -p python3 .
 . bin/activate
 pip install -r requirements.txt
